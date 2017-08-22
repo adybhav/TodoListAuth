@@ -1,0 +1,38 @@
+﻿@model TodoWebApp.Models.TodoItem
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+<h4>TodoItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+@using (Html.BeginForm("Edit", "TodoItems", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{                @Html.AntiForgeryToken()
+
+
+            @Html.TextBoxFor(m => m.Id, new {type="hidden", @class = "form-control" })
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Value, new { @class = "form-control" })
+                <br>
+                @Html.LabelFor(model => model.Done) 
+                @Html.CheckBoxFor(model => model.Done)
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+     
+}
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+

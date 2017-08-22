@@ -1,0 +1,44 @@
+﻿@model IEnumerable<TodoWebApp.Models.TodoUserInfo>
+
+@{
+    ViewData["Title"] = "User Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<center>
+    <h2>User Management</h2>
+
+</center>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Count
+            </th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @item.Count
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>

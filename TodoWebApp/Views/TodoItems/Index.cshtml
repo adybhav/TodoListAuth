@@ -1,0 +1,80 @@
+﻿@model IEnumerable<TodoWebApp.Models.TodoItem>
+
+@{
+    ViewData["Title"] = "Todo List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+                @Html.AntiForgeryToken()
+
+<center>
+    <h2>Todos</h2>
+@using (Html.BeginForm("Create", "TodoItems", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{                @Html.AntiForgeryToken()
+
+        <div class="form-group"> 
+            <input id="Value" name="Value" class="form-control" value="Enter Here" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    }
+</center>
+
+<p>@Html.ActionLink("Completed", "Index", "TodoItems", new { area = "", filter="com" }, null)
+    @Html.ActionLink("Active", "Index", "TodoItems", new { area = "", filter = "incom" }, null)
+    @Html.ActionLink("All", "Index", "TodoItems", new { area = "", filter = "" }, null)
+    @Html.ActionLink("Clear Completed", "DeleteCompleted", "TodoItems", new { area = "" }, null)
+   
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Done)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WhenCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastAccessed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompleteDate)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Value
+                </td>
+                <td>
+                   @item.Done 
+                </td>
+                <td>
+                    @item.WhenCreated
+            </td>
+            <td>
+                @item.LastAccessed
+            </td>
+            <td>
+                @item.CompleteDate
+            </td>
+                <td>
+                    <a href="/TodoItems/Edit/@item.Id">Edit</a>
+                    <a href="/TodoItems/Details/@item.Id">Details</a>
+                    <a href="/TodoItems/Delete/@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
