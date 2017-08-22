@@ -9,5 +9,7 @@ namespace TodoWebApp.Models
     {
         public string Email { get; set; }
         public int Count { get; set; }
+        public int Completed { get; set; }
+        public int Incomplete { get; set; }
     }
 }

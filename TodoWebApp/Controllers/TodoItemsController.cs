@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity;
+using System.Diagnostics;
 
 namespace TodoWebApp.Controllers
 {[Authorize]
@@ -124,6 +125,8 @@ namespace TodoWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, [Bind(Include ="Id,Value,Done")] TodoItem todoItem)
         {
+          
+
             if (id != todoItem.Id)
             {
                 return HttpNotFound();
@@ -133,11 +136,18 @@ namespace TodoWebApp.Controllers
             {
                 try
                 {
-                    todoItem.LastAccessed = DateTime.Now;
+                    
+                    var dbitem = _context.TodoItems.Find(id);
+                    dbitem.LastAccessed = DateTime.Now;
+                    dbitem.Value = todoItem.Value;
+                    dbitem.Done = todoItem.Done;
                     if (todoItem.Done) {
-                        todoItem.CompleteDate = DateTime.Now;
+                        dbitem.CompleteDate = DateTime.Now;
+                        
                     }
-                   // TODO _context.Update(todoItem);
+                    
+
+                    // TODO _context.Update(todoItem);
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception)

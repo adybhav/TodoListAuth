@@ -30,11 +30,14 @@ namespace TodoWebApp.Controllers
        
             ApplicationDbContext adc = new ApplicationDbContext();
             var users = adc.Users.ToList();
-            var list = new List<TodoUserInfo>();
+            var list = new List<TodoUserInfo>(); 
             foreach (var a in users) {
                 TodoUserInfo tdui = new TodoUserInfo();
                 tdui.Email = a.Email;
-                tdui.Count=_context.TodoItems.Where(m => m.UserId==a.Email).Count();
+                var useritems = _context.TodoItems.Where(m => m.UserId == a.Email).ToList();
+                tdui.Count=useritems.Count;
+                tdui.Completed = useritems.Where(m => m.Done).Count();
+                tdui.Incomplete = tdui.Count - tdui.Completed ;
                 list.Add(tdui);
                 
             }
